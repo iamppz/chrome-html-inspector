@@ -1,5 +1,5 @@
 {
-    "name": "Chrome Restarter",
+    "name": "HTML Source Viewer",
     "version": "0.0.1",
     "browser_action": {
         "default_icon": "restart.png"
@@ -12,5 +12,12 @@
     ],
     "background": {
         "scripts": ["background.js"]
-    }
+    },
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content.js"],
+        "css": ["content.css"]
+      }
+    ]
 }
