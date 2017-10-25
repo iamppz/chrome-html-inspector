@@ -11,7 +11,7 @@ document.body.addEventListener('keydown', e => {
   if (ctrl && alt) {
     let sourceViewer = document.getElementById('div-source-viewer');
     sourceViewer.style.display = 'block';
-    var rect = el.getBoundingClientRect();
+    let rect = el.getBoundingClientRect();
     if ((rect.bottom + sourceViewer.clientHeight) >= window.innerHeight) {
       sourceViewer.style.top = (rect.top - sourceViewer.clientHeight + window.scrollY) + 'px';
     } else {
@@ -34,7 +34,7 @@ document.body.addEventListener('keyup', e => {
   }
   if (!ctrl || !alt) {
     let sourceViewer = document.getElementById('div-source-viewer');
-    // sourceViewer.style.display = 'none';
+    sourceViewer.style.display = 'none';
   }
 });
 
