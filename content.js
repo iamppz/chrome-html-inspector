@@ -14,18 +14,18 @@ document.body.addEventListener('keydown', e => {
     // Show the layer with el's outerHTML
     let sourceViewer = document.getElementById('div-source-viewer');
     sourceViewer.style.display = 'block';
+    sourceViewer.firstChild.innerText = process(el.outerHTML);
     let rect = el.getBoundingClientRect();
     if ((rect.bottom + sourceViewer.clientHeight) >= window.innerHeight) {
       sourceViewer.style.top = (rect.top - sourceViewer.clientHeight + window.scrollY) + 'px';
     } else {
       sourceViewer.style.top = (rect.bottom + window.scrollY) + 'px';
     }
-    if ((rect.left + 360) >= document.body.clientWidth) {
-      sourceViewer.style.left = (rect.right - 360) + 'px';
+    if ((rect.left + sourceViewer.clientWidth) >= document.body.clientWidth) {
+      sourceViewer.style.left = (rect.right - sourceViewer.clientWidth) + 'px';
     } else {
       sourceViewer.style.left = rect.left + 'px';
     }
-    sourceViewer.firstChild.innerText = el.outerHTML;
   }
 });
 
@@ -54,3 +54,26 @@ div.classList.add('source-viewer');
 div.id = 'div-source-viewer';
 div.firstChild.innerHTML = 'This is source viewer';
 document.body.appendChild(div);
+
+function process(str) {
+  var div = document.createElement('div');
+  div.innerHTML = str.trim();
+  return format(div, 0).innerHTML;
+}
+
+function format(node, level) {
+  var indentBefore = new Array(level++ + 1).join('  '),
+    indentAfter = new Array(level - 1).join('  '),
+    textNode;
+  for (var i = 0; i < node.children.length; i++) {
+    textNode = document.createTextNode('\n' + indentBefore);
+    node.insertBefore(textNode, node.children[i]);
+    format(node.children[i], level);
+    if (node.lastElementChild == node.children[i]) {
+      textNode = document.createTextNode('\n' + indentAfter);
+      node.appendChild(textNode);
+    }
+  }
+
+  return node;
+}
