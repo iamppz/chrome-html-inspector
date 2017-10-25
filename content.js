@@ -1,5 +1,7 @@
 var alt = false;
 var ctrl = false;
+// A variable stores the last mouseover HTML element,
+// ctrl-alt command will show its outHTML on a layer.
 var el = null;
 
 document.body.addEventListener('keydown', e => {
@@ -9,6 +11,7 @@ document.body.addEventListener('keydown', e => {
     ctrl = true;
   }
   if (ctrl && alt) {
+    // Show the layer with el's outerHTML
     let sourceViewer = document.getElementById('div-source-viewer');
     sourceViewer.style.display = 'block';
     let rect = el.getBoundingClientRect();
