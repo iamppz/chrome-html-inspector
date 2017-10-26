@@ -1,3 +1,14 @@
+// Append source viewer panel to body
+var div = document.createElement('div');
+div.id = 'div-source-viewer';
+div.classList.add('source-viewer');
+div.appendChild(document.createElement('div'));
+document.body.appendChild(div);
+
+var cover = document.createElement('div');
+cover.classList.add('cover');
+document.body.appendChild(cover);
+
 var alt = false;
 var ctrl = false;
 // A variable stores the last mouseover HTML element,
@@ -11,11 +22,11 @@ document.body.addEventListener('keydown', e => {
     ctrl = true;
   }
   if (ctrl && alt) {
+    let rect = el.getBoundingClientRect();
+    
     // Show the layer with el's outerHTML
     let sourceViewer = document.getElementById('div-source-viewer');
-    sourceViewer.style.display = 'block';
     sourceViewer.firstChild.innerText = process(el.outerHTML);
-    let rect = el.getBoundingClientRect();
     if ((rect.bottom + sourceViewer.clientHeight) >= window.innerHeight) {
       sourceViewer.style.top = (rect.top - sourceViewer.clientHeight + window.scrollY) + 'px';
     } else {
@@ -26,6 +37,16 @@ document.body.addEventListener('keydown', e => {
     } else {
       sourceViewer.style.left = rect.left + 'px';
     }
+    sourceViewer.style.display = 'block';
+
+    // Cover the element with a translucent div
+    let cover = document.getElementsByClassName('cover')[0];
+    cover.style.top = (rect.top + window.scrollY) + 'px';
+    cover.style.left = (rect.left) + 'px';
+    console.log(rect);
+    cover.style.width = rect.width + 'px';
+    cover.style.height = rect.height + 'px';
+    cover.style.display = 'block';
   }
 });
 
@@ -38,6 +59,8 @@ document.body.addEventListener('keyup', e => {
   if (!ctrl || !alt) {
     let sourceViewer = document.getElementById('div-source-viewer');
     sourceViewer.style.display = 'none';
+    let cover = document.getElementsByClassName('cover')[0];
+    cover.style.display = 'none';
   }
 });
 
@@ -45,15 +68,6 @@ document.body.addEventListener('mouseover', e => {
   let sourceViewer = document.getElementById('div-source-viewer');
   el = e.target;
 });
-
-// Append source viewer panel to body
-var div = document.createElement('div');
-var childDiv = document.createElement('div');
-div.appendChild(childDiv);
-div.classList.add('source-viewer');
-div.id = 'div-source-viewer';
-div.firstChild.innerHTML = 'This is source viewer';
-document.body.appendChild(div);
 
 function process(str) {
   var div = document.createElement('div');

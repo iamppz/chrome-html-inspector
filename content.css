@@ -14,6 +14,8 @@
 
 .source-viewer > div {
   padding: 16px;
+  font-family: consolas;
+  color: mediumblue;
 }
 
 .source-viewer::before {
@@ -24,4 +26,13 @@
   border-bottom-color: blue;
   border-right-color: orange;
   border-left-color: black;
+}
+
+.cover {
+  position: absolute;
+  display: none;
+  /* background-color: blue; */
+  background-color: rgba(0, 0, 256, 0.5);
+  z-index: 65535;
+  pointer-events: none;
 }
