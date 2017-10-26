@@ -11,6 +11,7 @@ document.body.appendChild(cover);
 
 var alt = false;
 var ctrl = false;
+var enabled = false;
 // A variable stores the last mouseover HTML element,
 // ctrl-alt command will show its outHTML on a layer.
 var el = null;
@@ -21,7 +22,7 @@ document.body.addEventListener('keydown', e => {
   } else if (e.keyCode === 17) {
     ctrl = true;
   }
-  if (ctrl && alt) {
+  if (enabled && ctrl && alt) {
     let rect = el.getBoundingClientRect();
     
     // Show the layer with el's outerHTML
@@ -91,3 +92,10 @@ function format(node, level) {
 
   return node;
 }
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    console.log('Receive message: ' + request.enabled);
+    enabled = request.enabled;
+    sendResponse({status: 'ok'});
+  });

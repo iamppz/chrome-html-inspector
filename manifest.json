@@ -2,7 +2,7 @@
     "name": "HTML Source Viewer",
     "version": "0.0.1",
     "browser_action": {
-        "default_icon": "restart.png"
+        "default_icon": "icon.png"
     },
     "manifest_version": 2,
     "permissions": [

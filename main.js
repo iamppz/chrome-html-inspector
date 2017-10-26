@@ -1,1 +1,1 @@
-alert('Clicked.');
+// alert('Clicked.');
