@@ -10,7 +10,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
     path: path
   });
 
-  chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
+  chrome.tabs.query({}, function (tabs) {
     console.log(tabs.length);
     tabs.forEach(function (tab) {
       chrome.tabs.sendMessage(tab.id, {
