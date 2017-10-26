@@ -5,5 +5,5 @@
 
 ### Usage
   
-1. Click icon to enable capture;
-2. Press Ctrl+Alt and move mouse cursor to the HTML element.
+  1. Click icon to enable capture;
+  2. Press Ctrl+Alt and move mouse cursor to the HTML element.
