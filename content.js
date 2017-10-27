@@ -3,6 +3,8 @@ var div = document.createElement('div');
 div.id = 'div-source-viewer';
 div.classList.add('source-viewer');
 div.appendChild(document.createElement('div'));
+div.appendChild(document.createElement('i'));
+div.appendChild(document.createElement('i'));
 document.body.appendChild(div);
 
 div = document.createElement('div');
@@ -36,10 +38,14 @@ document.body.addEventListener('keydown', e => {
       sourceViewer.style.top = (rect.bottom + window.scrollY) + 'px';
     }
     sourceViewer.style.left = ((rect.left + rect.right) / 2 - (500 / 2)) + 'px';
-    if (sourceViewer.getBoundingClientRect().right >= document.body.clientWidth) {
+    let sub = sourceViewer.getBoundingClientRect().right - document.body.clientWidth
+    if (sub >= 0) {
       sourceViewer.style.left = null;
       sourceViewer.style.right = 0;
     }
+
+    sourceViewer.children[1].style.left = ((sub >= 0 ? sub : 0) + 242) + 'px';
+    sourceViewer.children[2].style.left = ((sub >= 0 ? sub : 0) + 243) + 'px';
 
     // Cover the element with a translucent div
     cover.style.top = (rect.top + window.scrollY) + 'px';
@@ -64,8 +70,8 @@ document.body.addEventListener('keyup', e => {
     ctrl = false;
   }
   if (!ctrl || !alt) {
-    sourceViewer.style.display = 'none';
-    cover.style.display = 'none';
+    // sourceViewer.style.display = 'none';
+    // cover.style.display = 'none';
   }
 });
 

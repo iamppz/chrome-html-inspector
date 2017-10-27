@@ -1,6 +1,4 @@
 .source-viewer {
-  overflow-y: auto;
-  overflow-x: hidden;
   position: absolute;
   display: none;
   background: white;
@@ -8,10 +6,13 @@
   box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
   -webkit-border-radius: 2px;
   border-radius: 2px;
+  border: 1px solid #999;
   z-index: 65535;
 }
 
-.source-viewer > div {
+.source-viewer>div {
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 16px;
   font-family: consolas;
   color: mediumblue;
@@ -19,6 +20,52 @@
   max-width: 500px;
   max-height: 320px;
   overflow-y: hidden;
+}
+
+.source-viewer i:first-of-type {
+  position: absolute;
+  width: 0px;
+  top: -16px;
+  height: 0px;
+  border: 8px solid #999;
+  border-top-color: #999;
+  border-bottom-color: #999;
+  border-right-color: #999;
+  border-left-color: #999;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+  display: none;
+}
+
+.source-viewer>i:last-of-type {
+  position: absolute;
+  left: 1px;
+  width: 0px;
+  top: -14px;
+  height: 0px;
+  border: 7px solid white;
+  border-top-color: white;
+  border-bottom-color: white;
+  border-right-color: white;
+  border-left-color: white;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-right-color: transparent;
+
+  display: none;
+}
+
+.source-viewer::before {
+  top: -16px;
+  right: 9px;
+  left: auto
+}
+
+.source-viewer::after {
+  top: -14px;
+  right: 10px;
+  left: auto
 }
 
 .cover {
