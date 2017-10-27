@@ -1,5 +1,6 @@
-# Chrome HTML Source Viewer
+# Chrome HTML Inspector
 
+- [ ] Icon
 - [ ] Theme(Solarized)
 - [ ] Material Design
 - [ ] Scroll to switch in parent&child
