@@ -1,6 +1,7 @@
 # Chrome HTML Source Viewer
 
-- [ ] Theme
+- [ ] Theme(Solarized)
+- [ ] Material Design
 - [ ] Scroll to switch in parent&child
 - [ ] Pinned on the page, Esc to close
 
