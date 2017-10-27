@@ -26,19 +26,19 @@ document.body.addEventListener('keydown', e => {
     let rect = el.getBoundingClientRect();
     
     // Show the layer with el's outerHTML
-    let sourceViewer = document.getElementById('div-source-viewer');
+    showSourceViewer();
+    let sourceViewer = getSourceViewer();
     sourceViewer.firstChild.innerText = process(el.outerHTML);
     if ((rect.bottom + sourceViewer.clientHeight) >= window.innerHeight) {
       sourceViewer.style.top = (rect.top - sourceViewer.clientHeight + window.scrollY) + 'px';
     } else {
       sourceViewer.style.top = (rect.bottom + window.scrollY) + 'px';
     }
-    if ((rect.left + sourceViewer.clientWidth) >= document.body.clientWidth) {
-      sourceViewer.style.left = (rect.right - sourceViewer.clientWidth) + 'px';
-    } else {
-      sourceViewer.style.left = rect.left + 'px';
+    sourceViewer.style.left = ((rect.left + rect.right) / 2 - (500 / 2)) + 'px';
+    if (sourceViewer.getBoundingClientRect().right >= document.body.clientWidth) {
+      sourceViewer.style.left = null;
+      sourceViewer.style.right = 0;
     }
-    sourceViewer.style.display = 'block';
 
     // Cover the element with a translucent div
     let cover = document.getElementsByClassName('cover')[0];
@@ -51,6 +51,18 @@ document.body.addEventListener('keydown', e => {
   }
 });
 
+function getSourceViewer() {
+  return document.getElementById('div-source-viewer');
+}
+
+function showSourceViewer() {
+  let sourceViewer = getSourceViewer();
+  sourceViewer.style.top = null;
+  sourceViewer.style.left = null;
+  sourceViewer.style.right = null;
+  sourceViewer.style.display = 'block';
+}
+
 document.body.addEventListener('keyup', e => {
   if (e.keyCode === 18) {
     alt = false;
@@ -58,7 +70,7 @@ document.body.addEventListener('keyup', e => {
     ctrl = false;
   }
   if (!ctrl || !alt) {
-    let sourceViewer = document.getElementById('div-source-viewer');
+    let sourceViewer = getSourceViewer();
     sourceViewer.style.display = 'none';
     let cover = document.getElementsByClassName('cover')[0];
     cover.style.display = 'none';

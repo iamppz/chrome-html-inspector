@@ -1,5 +1,4 @@
 .source-viewer {
-  max-height: 320px;
   overflow-y: auto;
   overflow-x: hidden;
   position: absolute;
@@ -16,16 +15,10 @@
   padding: 16px;
   font-family: consolas;
   color: mediumblue;
-}
-
-.source-viewer::before {
-  width: 0px;
-  height: 0px;
-  border: 100px solid red;
-  border-top-color: red;
-  border-bottom-color: blue;
-  border-right-color: orange;
-  border-left-color: black;
+  width: 500px;
+  max-width: 500px;
+  max-height: 320px;
+  overflow-y: hidden;
 }
 
 .cover {

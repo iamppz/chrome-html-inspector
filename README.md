@@ -3,7 +3,7 @@
 - [ ] Theme
 - [ ] Scroll to switch in parent&child
 
-### Usage
-  
+## Usage
+
   1. Click icon to enable capture;
-  2. Press Ctrl+Alt and move mouse cursor to the HTML element.
+  1. Press Ctrl+Alt and move mouse cursor to the HTML element.
