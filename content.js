@@ -5,9 +5,9 @@ div.classList.add('source-viewer');
 div.appendChild(document.createElement('div'));
 document.body.appendChild(div);
 
-var cover = document.createElement('div');
-cover.classList.add('cover');
-document.body.appendChild(cover);
+div = document.createElement('div');
+div.classList.add('cover');
+document.body.appendChild(div);
 
 var alt = false;
 var ctrl = false;
@@ -15,6 +15,8 @@ var enabled = false;
 // A variable stores the last mouseover HTML element,
 // ctrl-alt command will show its outHTML on a layer.
 var el = null;
+const sourceViewer = document.getElementById('div-source-viewer');
+const cover = document.getElementsByClassName('cover')[0];
 
 document.body.addEventListener('keydown', e => {
   if (e.keyCode === 18) {
@@ -24,10 +26,9 @@ document.body.addEventListener('keydown', e => {
   }
   if (enabled && ctrl && alt) {
     let rect = el.getBoundingClientRect();
-    
+
     // Show the layer with el's outerHTML
     showSourceViewer();
-    let sourceViewer = getSourceViewer();
     sourceViewer.firstChild.innerText = process(el.outerHTML);
     if ((rect.bottom + sourceViewer.clientHeight) >= window.innerHeight) {
       sourceViewer.style.top = (rect.top - sourceViewer.clientHeight + window.scrollY) + 'px';
@@ -41,22 +42,15 @@ document.body.addEventListener('keydown', e => {
     }
 
     // Cover the element with a translucent div
-    let cover = document.getElementsByClassName('cover')[0];
     cover.style.top = (rect.top + window.scrollY) + 'px';
     cover.style.left = (rect.left) + 'px';
-    console.log(rect);
     cover.style.width = rect.width + 'px';
     cover.style.height = rect.height + 'px';
     cover.style.display = 'block';
   }
 });
 
-function getSourceViewer() {
-  return document.getElementById('div-source-viewer');
-}
-
 function showSourceViewer() {
-  let sourceViewer = getSourceViewer();
   sourceViewer.style.top = null;
   sourceViewer.style.left = null;
   sourceViewer.style.right = null;
@@ -70,15 +64,12 @@ document.body.addEventListener('keyup', e => {
     ctrl = false;
   }
   if (!ctrl || !alt) {
-    let sourceViewer = getSourceViewer();
     sourceViewer.style.display = 'none';
-    let cover = document.getElementsByClassName('cover')[0];
     cover.style.display = 'none';
   }
 });
 
 document.body.addEventListener('mouseover', e => {
-  let sourceViewer = document.getElementById('div-source-viewer');
   el = e.target;
 });
 
@@ -106,8 +97,10 @@ function format(node, level) {
 }
 
 chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
+  function (request, sender, sendResponse) {
     console.log('Receive message: ' + request.enabled);
     enabled = request.enabled;
-    sendResponse({status: 'ok'});
+    sendResponse({
+      status: 'ok'
+    });
   });
