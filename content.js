@@ -1,21 +1,4 @@
-// Append source viewer panel to body
-var div = document.createElement('div');
-div.id = 'div-source-viewer';
-div.classList.add('source-viewer');
-div.appendChild(document.createElement('div'));
-var i = document.createElement('i');
-i.classList.add('sv-pointer');
-i.classList.add('outer')
-div.appendChild(i);
-i = document.createElement('i')
-i.classList.add('sv-pointer');
-i.classList.add('innner')
-div.appendChild(i);
-document.body.appendChild(div);
-
-div = document.createElement('div');
-div.classList.add('cover');
-document.body.appendChild(div);
+initHTMLElements();
 
 var alt = false;
 var ctrl = false;
@@ -24,7 +7,7 @@ var enabled = false;
 // ctrl-alt command will show its outHTML on a layer.
 var el = null;
 const sourceViewer = document.getElementById('div-source-viewer');
-const cover = document.getElementsByClassName('cover')[0];
+const cover = document.getElementById('sv-cover');
 
 document.body.addEventListener('keydown', e => {
   if (e.keyCode === 18) {
@@ -126,11 +109,36 @@ function format(node, level) {
   return node;
 }
 
-chrome.runtime.onMessage.addListener(
-  function (request, sender, sendResponse) {
-    console.log('Receive message: ' + request.enabled);
-    enabled = request.enabled;
-    sendResponse({
-      status: 'ok'
-    });
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  console.log('Receive message: ' + request.enabled);
+  enabled = request.enabled;
+  sendResponse({
+    status: 'ok'
   });
+});
+
+function initHTMLElements() {
+  // Append source viewer panel to body
+  let div = document.createElement('div');
+  div.id = 'div-source-viewer';
+  div.classList.add('source-viewer');
+
+  // HTML content container
+  div.appendChild(document.createElement('div'));
+
+  // Outer pointer
+  let i = document.createElement('i');
+  i.classList.add('sv-pointer');
+  div.appendChild(i);
+
+  // Inner pointer
+  i = document.createElement('i')
+  i.classList.add('sv-pointer');
+  div.appendChild(i);
+  document.body.appendChild(div);
+
+  // Cover
+  div = document.createElement('div');
+  div.classList.add('sv-cover');
+  document.body.appendChild(div);
+}
