@@ -3,8 +3,14 @@ var div = document.createElement('div');
 div.id = 'div-source-viewer';
 div.classList.add('source-viewer');
 div.appendChild(document.createElement('div'));
-div.appendChild(document.createElement('i'));
-div.appendChild(document.createElement('i'));
+var i = document.createElement('i');
+i.classList.add('sv-pointer');
+i.classList.add('outer')
+div.appendChild(i);
+i = document.createElement('i')
+i.classList.add('sv-pointer');
+i.classList.add('innner')
+div.appendChild(i);
 document.body.appendChild(div);
 
 div = document.createElement('div');
