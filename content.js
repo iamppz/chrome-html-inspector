@@ -33,9 +33,27 @@ document.body.addEventListener('keydown', e => {
     showSourceViewer();
     sourceViewer.firstChild.innerText = process(el.outerHTML);
     if ((rect.bottom + sourceViewer.clientHeight) >= window.innerHeight) {
-      sourceViewer.style.top = (rect.top - sourceViewer.clientHeight + window.scrollY) + 'px';
+      sourceViewer.style.top = (rect.top - sourceViewer.clientHeight + window.scrollY - 8) + 'px';
+      sourceViewer.children[1].style.bottom = '-16px';
+      sourceViewer.children[1].style.top = null;
+      sourceViewer.children[1].style.borderBottomColor = 'transparent';
+      sourceViewer.children[1].style.borderTopColor = '#999';
+
+      sourceViewer.children[2].style.bottom = '-14px';
+      sourceViewer.children[2].style.top = null;
+      sourceViewer.children[2].style.borderBottomColor = 'transparent';
+      sourceViewer.children[2].style.borderTopColor = 'white';
     } else {
-      sourceViewer.style.top = (rect.bottom + window.scrollY) + 'px';
+      sourceViewer.style.top = (rect.bottom + window.scrollY + 8) + 'px';
+      sourceViewer.children[1].style.top = '-16px';
+      sourceViewer.children[1].style.bottom = null;
+      sourceViewer.children[1].style.borderBottomColor = '#999';
+      sourceViewer.children[1].style.borderTopColor = 'transparent';
+
+      sourceViewer.children[2].style.top = '-14px';
+      sourceViewer.children[2].style.bottom = null;
+      sourceViewer.children[2].style.borderBottomColor = 'white';
+      sourceViewer.children[2].style.borderTopColor = 'transparent';
     }
     sourceViewer.style.left = ((rect.left + rect.right) / 2 - (500 / 2)) + 'px';
     let sub = sourceViewer.getBoundingClientRect().right - document.body.clientWidth
