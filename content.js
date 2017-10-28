@@ -25,20 +25,25 @@ document.body.addEventListener('keydown', e => {
     sourceViewer.firstChild.innerText = process(el.outerHTML);
     if ((rect.bottom + sourceViewer.clientHeight) >= window.innerHeight - 8) {
       sourceViewer.style.top = (rect.top - sourceViewer.clientHeight + window.scrollY - 8) + 'px';
-      pointTo('down');
+      sourceViewer.classList.add('up');
+      sourceViewer.classList.remove('down');
     } else {
       sourceViewer.style.top = (rect.bottom + window.scrollY + 8) + 'px';
-      pointTo('up');
-    }
-    sourceViewer.style.left = ((rect.left + rect.right) / 2 - (500 / 2)) + 'px';
-    let overflow = sourceViewer.getBoundingClientRect().right - document.body.clientWidth
-    if (overflow >= 0) {
-      sourceViewer.style.left = null;
-      sourceViewer.style.right = 0;
+      sourceViewer.classList.add('down');
+      sourceViewer.classList.remove('up');
     }
 
-    outerPointer.style.left = ((overflow >= 0 ? overflow : 0) + 242) + 'px';
-    innerPointer.style.left = ((overflow >= 0 ? overflow : 0) + 243) + 'px';
+    if (rect.left < document.body.clientWidth / 2) {
+      sourceViewer.classList.add('left');
+      sourceViewer.classList.remove('right');
+      sourceViewer.style.left = rect.left + 'px';
+      sourceViewer.style.right = null;
+    } else {
+      sourceViewer.classList.add('right');
+      sourceViewer.classList.remove('left');
+      sourceViewer.style.left = null;
+      sourceViewer.style.right = (document.body.clientWidth - rect.right) + 'px';
+    }
 
     // Cover the element with a translucent div
     cover.style.top = (rect.top + window.scrollY) + 'px';
@@ -112,29 +117,8 @@ function initHTMLElements() {
 
   document.body.appendChild(viewer);
 
-  // Create pointer
-  let pointerClasses = ['outer', 'inner'];
-  for (var index = 0; index < pointerClasses.length; index++) {
-    let i = document.createElement('i');
-    i.classList.add('sv-pointer');
-    i.classList.add(pointerClasses[index])
-    viewer.appendChild(i);
-  }
-
   // Cover
   let cover = document.createElement('div');
   cover.id = 'sv-cover';
   document.body.appendChild(cover);
-}
-
-function pointTo(direction) {
-  outerPointer.classList.add(direction);
-  innerPointer.classList.add(direction);
-  if (direction === 'up') {
-    outerPointer.classList.remove('down');
-    innerPointer.classList.remove('down');
-  } else {
-    outerPointer.classList.remove('up');
-    innerPointer.classList.remove('up');
-  }
 }
