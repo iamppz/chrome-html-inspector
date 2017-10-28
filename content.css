@@ -27,7 +27,7 @@
   pointer-events: none;
 }
 
-.sv-pointer:first-of-type {
+.sv-pointer.outer {
   border: 8px solid #999;
   border-right-color: #999;
   border-left-color: #999;
@@ -35,19 +35,19 @@
   border-right-color: transparent;
 }
 
-.sv-pointer:first-of-type.up {
+.sv-pointer.outer.up {
   top: -16px;
   border-bottom-color: #999;
   border-top-color: transparent;
 }
 
-.sv-pointer:first-of-type.down {
+.sv-pointer.outer.down {
   bottom: -16px;
   border-bottom-color: transparent;
   border-top-color: #999;
 }
 
-.sv-pointer:last-of-type {
+.sv-pointer.inner {
   border: 7px solid white;
   border-right-color: white;
   border-left-color: white;
@@ -55,13 +55,13 @@
   border-right-color: transparent;
 }
 
-.sv-pointer:last-of-type.up {
+.sv-pointer.inner.up {
   top: -14px;
   border-bottom-color: white;
   border-top-color: transparent;
 }
 
-.sv-pointer:last-of-type.down {
+.sv-pointer.inner.down {
   bottom: -14px;
   border-bottom-color: transparent;
   border-top-color: white;

@@ -8,6 +8,8 @@ var enabled = false;
 var el = null;
 const sourceViewer = document.getElementById('div-source-viewer');
 const cover = document.getElementById('sv-cover');
+const outerPointer = document.getElementsByClassName('sv-pointer outer')[0];
+const innerPointer = document.getElementsByClassName('sv-pointer inner')[0];
 
 document.body.addEventListener('keydown', e => {
   if (e.keyCode === 18) {
@@ -21,30 +23,22 @@ document.body.addEventListener('keydown', e => {
     // Show the layer with el's outerHTML
     showSourceViewer();
     sourceViewer.firstChild.innerText = process(el.outerHTML);
-    if ((rect.bottom + sourceViewer.clientHeight) >= window.innerHeight) {
+    if ((rect.bottom + sourceViewer.clientHeight) >= window.innerHeight - 8) {
       sourceViewer.style.top = (rect.top - sourceViewer.clientHeight + window.scrollY - 8) + 'px';
-
-      sourceViewer.children[1].classList.add('down');
-      sourceViewer.children[1].classList.remove('up');
-      sourceViewer.children[2].classList.add('down');
-      sourceViewer.children[2].classList.remove('up');
+      pointTo('down');
     } else {
       sourceViewer.style.top = (rect.bottom + window.scrollY + 8) + 'px';
-
-      sourceViewer.children[1].classList.add('up');
-      sourceViewer.children[1].classList.remove('down');
-      sourceViewer.children[2].classList.add('up');
-      sourceViewer.children[2].classList.remove('down');
+      pointTo('up');
     }
     sourceViewer.style.left = ((rect.left + rect.right) / 2 - (500 / 2)) + 'px';
-    let sub = sourceViewer.getBoundingClientRect().right - document.body.clientWidth
-    if (sub >= 0) {
+    let overflow = sourceViewer.getBoundingClientRect().right - document.body.clientWidth
+    if (overflow >= 0) {
       sourceViewer.style.left = null;
       sourceViewer.style.right = 0;
     }
 
-    sourceViewer.children[1].style.left = ((sub >= 0 ? sub : 0) + 242) + 'px';
-    sourceViewer.children[2].style.left = ((sub >= 0 ? sub : 0) + 243) + 'px';
+    outerPointer.style.left = ((overflow >= 0 ? overflow : 0) + 242) + 'px';
+    innerPointer.style.left = ((overflow >= 0 ? overflow : 0) + 243) + 'px';
 
     // Cover the element with a translucent div
     cover.style.top = (rect.top + window.scrollY) + 'px';
@@ -56,9 +50,7 @@ document.body.addEventListener('keydown', e => {
 });
 
 function showSourceViewer() {
-  sourceViewer.style.top = null;
-  sourceViewer.style.left = null;
-  sourceViewer.style.right = null;
+  sourceViewer.style.top = sourceViewer.style.left = sourceViewer.right = null;
   sourceViewer.style.display = 'block';
 }
 
@@ -121,9 +113,11 @@ function initHTMLElements() {
   document.body.appendChild(viewer);
 
   // Create pointer
-  for (var index = 0; index < 2; index++) {
+  let pointerClasses = ['outer', 'inner'];
+  for (var index = 0; index < pointerClasses.length; index++) {
     let i = document.createElement('i');
     i.classList.add('sv-pointer');
+    i.classList.add(pointerClasses[index])
     viewer.appendChild(i);
   }
 
@@ -131,4 +125,16 @@ function initHTMLElements() {
   let cover = document.createElement('div');
   cover.id = 'sv-cover';
   document.body.appendChild(cover);
+}
+
+function pointTo(direction) {
+  outerPointer.classList.add(direction);
+  innerPointer.classList.add(direction);
+  if (direction === 'up') {
+    outerPointer.classList.remove('down');
+    innerPointer.classList.remove('down');
+  } else {
+    outerPointer.classList.remove('up');
+    innerPointer.classList.remove('up');
+  }
 }
