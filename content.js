@@ -23,26 +23,18 @@ document.body.addEventListener('keydown', e => {
     sourceViewer.firstChild.innerText = process(el.outerHTML);
     if ((rect.bottom + sourceViewer.clientHeight) >= window.innerHeight) {
       sourceViewer.style.top = (rect.top - sourceViewer.clientHeight + window.scrollY - 8) + 'px';
-      sourceViewer.children[1].style.bottom = '-16px';
-      sourceViewer.children[1].style.top = null;
-      sourceViewer.children[1].style.borderBottomColor = 'transparent';
-      sourceViewer.children[1].style.borderTopColor = '#999';
 
-      sourceViewer.children[2].style.bottom = '-14px';
-      sourceViewer.children[2].style.top = null;
-      sourceViewer.children[2].style.borderBottomColor = 'transparent';
-      sourceViewer.children[2].style.borderTopColor = 'white';
+      sourceViewer.children[1].classList.add('down');
+      sourceViewer.children[1].classList.remove('up');
+      sourceViewer.children[2].classList.add('down');
+      sourceViewer.children[2].classList.remove('up');
     } else {
       sourceViewer.style.top = (rect.bottom + window.scrollY + 8) + 'px';
-      sourceViewer.children[1].style.top = '-16px';
-      sourceViewer.children[1].style.bottom = null;
-      sourceViewer.children[1].style.borderBottomColor = '#999';
-      sourceViewer.children[1].style.borderTopColor = 'transparent';
 
-      sourceViewer.children[2].style.top = '-14px';
-      sourceViewer.children[2].style.bottom = null;
-      sourceViewer.children[2].style.borderBottomColor = 'white';
-      sourceViewer.children[2].style.borderTopColor = 'transparent';
+      sourceViewer.children[1].classList.add('up');
+      sourceViewer.children[1].classList.remove('down');
+      sourceViewer.children[2].classList.add('up');
+      sourceViewer.children[2].classList.remove('down');
     }
     sourceViewer.style.left = ((rect.left + rect.right) / 2 - (500 / 2)) + 'px';
     let sub = sourceViewer.getBoundingClientRect().right - document.body.clientWidth
@@ -119,26 +111,24 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 function initHTMLElements() {
   // Append source viewer panel to body
-  let div = document.createElement('div');
-  div.id = 'div-source-viewer';
-  div.classList.add('source-viewer');
+  let viewer = document.createElement('div');
+  viewer.id = 'div-source-viewer';
+  viewer.classList.add('source-viewer');
 
   // HTML content container
-  div.appendChild(document.createElement('div'));
+  viewer.appendChild(document.createElement('div'));
 
-  // Outer pointer
-  let i = document.createElement('i');
-  i.classList.add('sv-pointer');
-  div.appendChild(i);
+  document.body.appendChild(viewer);
 
-  // Inner pointer
-  i = document.createElement('i')
-  i.classList.add('sv-pointer');
-  div.appendChild(i);
-  document.body.appendChild(div);
+  // Create pointer
+  for (var index = 0; index < 2; index++) {
+    let i = document.createElement('i');
+    i.classList.add('sv-pointer');
+    viewer.appendChild(i);
+  }
 
   // Cover
-  div = document.createElement('div');
-  div.classList.add('sv-cover');
-  document.body.appendChild(div);
+  let cover = document.createElement('div');
+  cover.id = 'sv-cover';
+  document.body.appendChild(cover);
 }

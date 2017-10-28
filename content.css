@@ -20,35 +20,51 @@
   overflow-y: hidden;
 }
 
-.source-viewer>i:first-of-type {
+.sv-pointer {
   position: absolute;
   width: 0px;
   height: 0px;
-  border: 8px solid #999;
-  border-top-color: #999;
-  border-bottom-color: #999;
-  border-right-color: #999;
-  border-left-color: #999;
-  border-top-color: transparent;
-  border-left-color: transparent;
-  border-right-color: transparent;
   pointer-events: none;
 }
 
-.source-viewer>i:last-of-type {
-  position: absolute;
-  left: 1px;
-  width: 0px;
-  height: 0px;
-  border: 7px solid white;
-  border-top-color: white;
-  border-bottom-color: white;
-  border-right-color: white;
-  border-left-color: white;
-  border-top-color: transparent;
+.sv-pointer:first-of-type {
+  border: 8px solid #999;
+  border-right-color: #999;
+  border-left-color: #999;
   border-left-color: transparent;
   border-right-color: transparent;
-  pointer-events: none;
+}
+
+.sv-pointer:first-of-type.up {
+  top: -16px;
+  border-bottom-color: #999;
+  border-top-color: transparent;
+}
+
+.sv-pointer:first-of-type.down {
+  bottom: -16px;
+  border-bottom-color: transparent;
+  border-top-color: #999;
+}
+
+.sv-pointer:last-of-type {
+  border: 7px solid white;
+  border-right-color: white;
+  border-left-color: white;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+.sv-pointer:last-of-type.up {
+  top: -14px;
+  border-bottom-color: white;
+  border-top-color: transparent;
+}
+
+.sv-pointer:last-of-type.down {
+  bottom: -14px;
+  border-bottom-color: transparent;
+  border-top-color: white;
 }
 
 .source-viewer::before {
@@ -63,7 +79,7 @@
   left: auto
 }
 
-.sv-cover {
+#sv-cover {
   position: absolute;
   display: none;
   /* background-color: blue; */
