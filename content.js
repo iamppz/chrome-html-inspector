@@ -6,10 +6,8 @@ var enabled = false;
 // A variable stores the last mouseover HTML element,
 // ctrl-alt command will show its outHTML on a layer.
 var el = null;
-const sourceViewer = document.getElementById('div-source-viewer');
+const inspector = document.getElementById('div-source-viewer');
 const cover = document.getElementById('sv-cover');
-const outerPointer = document.getElementsByClassName('sv-pointer outer')[0];
-const innerPointer = document.getElementsByClassName('sv-pointer inner')[0];
 
 document.body.addEventListener('keydown', e => {
   if (e.keyCode === 18) {
@@ -21,53 +19,60 @@ document.body.addEventListener('keydown', e => {
     let rect = el.getBoundingClientRect();
 
     // Show the layer with el's outerHTML
-    showSourceViewer();
-    sourceViewer.firstChild.innerText = process(el.outerHTML);
-    if ((rect.bottom + sourceViewer.clientHeight) >= window.innerHeight - 8) {
-      sourceViewer.style.top = (rect.top - sourceViewer.clientHeight + window.scrollY - 8) + 'px';
-      sourceViewer.classList.add('up');
-      sourceViewer.classList.remove('down');
+    show();
+
+    inspector.firstChild.innerText = process(el.outerHTML);
+    if ((rect.bottom + inspector.clientHeight) >= window.innerHeight - 8) {
+      inspector.style.top = (rect.top - inspector.clientHeight + window.scrollY - 8) + 'px';
+      inspector.classList.add('up');
+      inspector.classList.remove('down');
     } else {
-      sourceViewer.style.top = (rect.bottom + window.scrollY + 8) + 'px';
-      sourceViewer.classList.add('down');
-      sourceViewer.classList.remove('up');
+      inspector.style.top = (rect.bottom + window.scrollY + 8) + 'px';
+      inspector.classList.add('down');
+      inspector.classList.remove('up');
     }
 
     if (rect.left < document.body.clientWidth / 2) {
-      sourceViewer.classList.add('left');
-      sourceViewer.classList.remove('right');
-      sourceViewer.style.left = rect.left + 'px';
-      sourceViewer.style.right = null;
+      inspector.classList.add('left');
+      inspector.classList.remove('right');
+      inspector.style.left = rect.left + 'px';
+      inspector.style.right = null;
     } else {
-      sourceViewer.classList.add('right');
-      sourceViewer.classList.remove('left');
-      sourceViewer.style.left = null;
-      sourceViewer.style.right = (document.body.clientWidth - rect.right) + 'px';
+      inspector.classList.add('right');
+      inspector.classList.remove('left');
+      inspector.style.left = null;
+      inspector.style.right = (document.body.clientWidth - rect.right) + 'px';
     }
 
     // Cover the element with a translucent div
     cover.style.top = (rect.top + window.scrollY) + 'px';
-    cover.style.left = (rect.left) + 'px';
+    cover.style.left = rect.left + 'px';
     cover.style.width = rect.width + 'px';
     cover.style.height = rect.height + 'px';
-    cover.style.display = 'block';
   }
 });
 
-function showSourceViewer() {
-  sourceViewer.style.top = sourceViewer.style.left = sourceViewer.right = null;
-  sourceViewer.style.display = 'block';
+function show() {
+  inspector.style.display = cover.style.display = 'block';
+}
+
+function hide() {
+  inspector.style.display = cover.style.display = null;
 }
 
 document.body.addEventListener('keyup', e => {
-  if (e.keyCode === 18) {
-    alt = false;
-  } else if (e.keyCode === 17) {
-    ctrl = false;
-  }
-  if (!ctrl || !alt) {
-    // sourceViewer.style.display = 'none';
-    // cover.style.display = 'none';
+  switch (e.keyCode) {
+    case 18:
+      alt = false;
+      break;
+    case 17:
+      ctrl = false;
+      break;
+    case 27:
+      hide();
+      break;
+    default:
+      break;
   }
 });
 
