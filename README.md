@@ -10,4 +10,5 @@
 ## Usage
 
   1. Click icon to enable capture;
-  1. Press Ctrl+Alt and move mouse cursor to the HTML element.
+  1. Press Ctrl+Alt and then move your mouse to an element to show the inspect window;
+  1. Press Esc to close the inspector window.
