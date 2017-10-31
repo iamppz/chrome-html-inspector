@@ -1,10 +1,11 @@
 # Chrome HTML Inspector
 
+## Todo
+
 - [ ] Icon
 - [ ] Theme(Solarized)
 - [ ] Material Design
 - [ ] Scroll to switch in parent&child
-- [ ] Pinned on the page, Esc to close
 
 ## Usage
 
