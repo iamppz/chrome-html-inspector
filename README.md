@@ -11,4 +11,4 @@
 
   1. Click icon to enable capture;
   1. Press Ctrl+Alt and then move your mouse to an element to show the inspect window;
-  1. Press Esc to close the inspector window.
+  1. Press Esc to close the inspect window.
