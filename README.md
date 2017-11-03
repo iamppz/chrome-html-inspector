@@ -6,6 +6,7 @@
 - [ ] Theme(Solarized)
 - [ ] Material Design
 - [ ] Scroll to switch in parent&child
+- [ ] Click to copy to clipboard
 
 ## Usage
 

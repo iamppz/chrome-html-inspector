@@ -9,6 +9,12 @@ var el = null;
 const inspector = document.getElementById('div-source-viewer');
 const cover = document.getElementById('sv-cover');
 
+document.body.addEventListener('mousewheel', e => {
+  if (enabled && ctrl && alt) {
+    
+  }
+});
+
 document.body.addEventListener('keydown', e => {
   if (e.keyCode === 18) {
     alt = true;
