@@ -11,7 +11,10 @@ const cover = document.getElementById('sv-cover');
 
 document.body.addEventListener('mousewheel', e => {
   if (enabled && ctrl && alt) {
-    
+    e.stopPropagation();
+    // alert('stoped');
+    // Show the layer with el's outerHTML
+    // show();
   }
 });
 
@@ -22,44 +25,42 @@ document.body.addEventListener('keydown', e => {
     ctrl = true;
   }
   if (enabled && ctrl && alt) {
-    let rect = el.getBoundingClientRect();
-
     // Show the layer with el's outerHTML
     show();
-
-    inspector.firstChild.innerText = process(el.outerHTML);
-    if ((rect.bottom + inspector.clientHeight) >= window.innerHeight - 8) {
-      inspector.style.top = (rect.top - inspector.clientHeight + window.scrollY - 8) + 'px';
-      inspector.classList.add('up');
-      inspector.classList.remove('down');
-    } else {
-      inspector.style.top = (rect.bottom + window.scrollY + 8) + 'px';
-      inspector.classList.add('down');
-      inspector.classList.remove('up');
-    }
-
-    if (rect.left < document.body.clientWidth / 2) {
-      inspector.classList.add('left');
-      inspector.classList.remove('right');
-      inspector.style.left = rect.left + 'px';
-      inspector.style.right = null;
-    } else {
-      inspector.classList.add('right');
-      inspector.classList.remove('left');
-      inspector.style.left = null;
-      inspector.style.right = (document.body.clientWidth - rect.right) + 'px';
-    }
-
-    // Cover the element with a translucent div
-    cover.style.top = (rect.top + window.scrollY) + 'px';
-    cover.style.left = rect.left + 'px';
-    cover.style.width = rect.width + 'px';
-    cover.style.height = rect.height + 'px';
   }
 });
 
 function show() {
+  let rect = el.getBoundingClientRect();
   inspector.style.display = cover.style.display = 'block';
+  inspector.firstChild.innerText = process(el.outerHTML);
+  if ((rect.bottom + inspector.clientHeight) >= window.innerHeight - 8) {
+    inspector.style.top = (rect.top - inspector.clientHeight + window.scrollY - 8) + 'px';
+    inspector.classList.add('up');
+    inspector.classList.remove('down');
+  } else {
+    inspector.style.top = (rect.bottom + window.scrollY + 8) + 'px';
+    inspector.classList.add('down');
+    inspector.classList.remove('up');
+  }
+
+  if (rect.left < document.body.clientWidth / 2) {
+    inspector.classList.add('left');
+    inspector.classList.remove('right');
+    inspector.style.left = rect.left + 'px';
+    inspector.style.right = null;
+  } else {
+    inspector.classList.add('right');
+    inspector.classList.remove('left');
+    inspector.style.left = null;
+    inspector.style.right = (document.body.clientWidth - rect.right) + 'px';
+  }
+
+  // Cover the element with a translucent div
+  cover.style.top = (rect.top + window.scrollY) + 'px';
+  cover.style.left = rect.left + 'px';
+  cover.style.width = rect.width + 'px';
+  cover.style.height = rect.height + 'px';
 }
 
 function hide() {
