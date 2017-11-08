@@ -1,16 +1,15 @@
 initHTMLElements();
 
 var alt = false;
-var ctrl = false;
 var enabled = false;
 // A variable stores the last mouseover HTML element,
-// ctrl-alt command will show its outHTML on a layer.
+// alt command will show its outHTML on a layer.
 var el = null;
 const inspector = document.getElementById('div-source-viewer');
 const cover = document.getElementById('sv-cover');
 
 document.body.addEventListener('mousewheel', e => {
-  if (enabled && ctrl && alt) {
+  if (enabled && alt) {
     e.stopPropagation();
     // alert('stoped');
     // Show the layer with el's outerHTML
@@ -21,10 +20,8 @@ document.body.addEventListener('mousewheel', e => {
 document.body.addEventListener('keydown', e => {
   if (e.keyCode === 18) {
     alt = true;
-  } else if (e.keyCode === 17) {
-    ctrl = true;
   }
-  if (enabled && ctrl && alt) {
+  if (enabled && alt) {
     // Show the layer with el's outerHTML
     show();
   }
@@ -71,9 +68,6 @@ document.body.addEventListener('keyup', e => {
   switch (e.keyCode) {
     case 18:
       alt = false;
-      break;
-    case 17:
-      ctrl = false;
       break;
     case 27:
       hide();
