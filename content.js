@@ -5,6 +5,7 @@ var enabled = false;
 // A variable stores the last mouseover HTML element,
 // alt command will show its outHTML on a layer.
 var el = null;
+var chainOfParents = [];
 const inspector = document.getElementById('div-source-viewer');
 const cover = document.getElementById('sv-cover');
 
