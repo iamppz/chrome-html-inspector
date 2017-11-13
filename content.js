@@ -4,16 +4,25 @@ var alt = false;
 var enabled = false;
 // A variable stores the last mouseover HTML element,
 // alt command will show its outHTML on a layer.
-var chainOfElements = [], offset = 0;
+var chainOfElements = [],
+  offset = 0;
 const inspector = document.getElementById('div-source-viewer');
 const cover = document.getElementById('sv-cover');
 
 document.body.addEventListener('mousewheel', e => {
   if (enabled && alt) {
-    e.stopPropagation();
-    // alert('stoped');
-    // Show the layer with el's outerHTML
-    // show();
+    if (e.wheelDelta < 0) {
+      //scroll down
+      if (offset > 0) {
+        offset--;
+      }
+    } else {
+      //scroll up
+      if (offset < chainOfElements.length - 1) {
+        offset++;
+      }
+    }
+    show();
   }
 });
 
@@ -79,9 +88,13 @@ document.body.addEventListener('keyup', e => {
 });
 
 document.body.addEventListener('mouseover', e => {
-  chainOfElements.length = 0;
-  chainOfElements.push(e.target);
-  // todo: push e.target and all of its parent nodes
+  chainOfElements.length = offset = 0;
+  let el = e.target;
+  chainOfElements.push(el);
+  while (el.tagName !== 'BODY') {
+    el = el.parentElement;
+    chainOfElements.push(el);
+  }
 });
 
 function process(str) {
