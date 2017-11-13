@@ -4,8 +4,7 @@ var alt = false;
 var enabled = false;
 // A variable stores the last mouseover HTML element,
 // alt command will show its outHTML on a layer.
-var el = null;
-var chainOfParents = [];
+var chainOfElements = [], offset = 0;
 const inspector = document.getElementById('div-source-viewer');
 const cover = document.getElementById('sv-cover');
 
@@ -29,6 +28,7 @@ document.body.addEventListener('keydown', e => {
 });
 
 function show() {
+  var el = chainOfElements[offset];
   let rect = el.getBoundingClientRect();
   inspector.style.display = cover.style.display = 'block';
   inspector.firstChild.innerText = process(el.outerHTML);
@@ -79,7 +79,9 @@ document.body.addEventListener('keyup', e => {
 });
 
 document.body.addEventListener('mouseover', e => {
-  el = e.target;
+  chainOfElements.length = 0;
+  chainOfElements.push(e.target);
+  // todo: push e.target and all of its parent nodes
 });
 
 function process(str) {
